@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Attrition Prediction</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for better radio/checkbox visibility */
+        .form-radio {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 50%;
+            border: 2px solid #6366f1; /* Indigo-600 */
+            transition: all 0.15s ease-in-out;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .form-radio:checked {
+            background-color: #4f46e5; /* Indigo-700 */
+            border-color: #4f46e5;
+            position: relative;
+        }
+
+        .form-radio:checked:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            background: white;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Set Inter as default font */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
+
+ <div class="login w-full max-w-5xl bg-white shadow-2xl rounded-xl p-6 md:p-10 lg:p-12">
+    <h1 class="text-4xl font-extrabold text-center text-indigo-700 mb-8">
+        Predict Attrition
+    </h1>
+
+    <form id="predictionForm" autocomplete="on" class="space-y-8">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <div class="form-group">
+                <label for="Age" class="block text-sm font-semibold text-gray-700 mb-1">Age</label>
+                <input type="number" name="Age" id="Age" placeholder="18-80" required min="18" max="80" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            </div>
+
+            <div class="form-group">
+                <label for="Daily_Rate" class="block text-sm font-semibold text-gray-700 mb-1">Daily Rate (100-1600)</label>
+                <input type="number" name="Daily Rate" id="Daily_Rate" placeholder="100-1600" required min="100" max="1600" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            </div>
+
+            <div class="form-group">
+                <label for="Distance_From_Home" class="block text-sm font-semibold text-gray-700 mb-1">Distance From Home (1-29)</label>
+                <input type="number" name="Distance From Home" id="Distance_From_Home" placeholder="1-29" required min="1" max="29" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            </div>
+
+            <div class="form-group">
+                <label for="Education" class="block text-sm font-semibold text-gray-700 mb-1">Education (1-5)</label>
+                <input type="number" name="Education" id="Education" placeholder="1-5" required min="1" max="5" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            </div>
+
+            <div class="form-group">
+                <label for="Environment_Satisfaction" class="block text-sm font-semibold text-gray-700 mb-1">Environment Satisfaction (1-4)</label>
+                <input type="number" name="Environment Satisfaction" id="Environment_Satisfaction" placeholder="1-4" required min="1" max="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            </div>
+            
+            <div class="form-group">
+                <label for="Hourly_Rate" class="block text-sm font-semibold text-gray-700 mb-1">Hourly Rate (30-100)</label>
+                <input type="number" name="Hourly Rate" id="Hourly_Rate" placeholder="30-100" required min="30" max="100" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            </div>
+            
+            <div class="form-group">
+                <label for="Job_Involvement" class="block text-sm font-semibold text-gray-700 mb-1">Job Involvement (1-4)</label>
+                <input type="number" name="Job Involvement" id="Job_Involvement" placeholder="1-4" required min="1" max="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            </div>
+            
+            <div class="form-group">
+                <label for="Job_Level" class="block text-sm font-semibold text-gray-700 mb-1">Job Level (1-5)</label>
+                <input type="number" name="Job Level" id="Job_Level" placeholder="1-5" required min="1" max="5" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            </div>
+            
+            <div class="form-group">
+                <label for="Job_Satisfaction" class="block text-sm font-semibold text-gray-700 mb-1">Job Satisfaction (1-4)</label>
+                <input type="number" name="Job Satisfaction" id="Job_Satisfaction" placeholder="1-4" required min="1" max="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            </div>
+
+            <div class="form-group">
+                <label for="Monthly_Income" class="block text-sm font-semibold text-gray-700 mb-1">Monthly Income (1000-20000)</label>
+                <input type="number" name="Monthly Income" id="Monthly_Income" placeholder="1000-20000" required min="1000" max="20000" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            </div>
+
+            <div class="form-group">
+                <label for="Monthly_Rate" class="block text-sm font-semibold text-gray-700 mb-1">Monthly Rate (2000-27000)</label>
+                <input type="number" name="Monthly Rate" id="Monthly_Rate" placeholder="2000-27000" required min="2000" max="27000" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            </div>
+
+            <div class="form-group">
+                <label for="Number_of_Companies_Worked_in" class="block text-sm font-semibold text-gray-700 mb-1">Number of Companies Worked in (0-9)</label>
+                <input type="number" name="Number of Companies Worked in" id="Number_of_Companies_Worked_in" placeholder="0-9" required min="0" max="9" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            </div>
+            
+            <div class="form-group">
+                <label for="Percent_Salary_Hike" class="block text-sm font-semibold text-gray-700 mb-1">Percent Salary Hike (11-25)</label>
+                <input type="number" name="Percent Salary Hike" id="Percent_Salary_Hike" placeholder="11-25" required min="11" max="25" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            </div>
+
+            <div class="form-group">
+                <label for="Performance_Rating" class="block text-sm font-semibold text-gray-700 mb-1">Performance Rating (1-4)</label>
+                <input type="number" name="Performance Rating" id="Performance_Rating" placeholder="1-4" required min="1" max="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            </div>
+            
+            <div class="form-group">
+                <label for="Relationship_Satisfaction" class="block text-sm font-semibold text-gray-700 mb-1">Relationship Satisfaction (1-4)</label>
+                <input type="number" name="Relationship Satisfaction" id="Relationship_Satisfaction" placeholder="1-4" required min="1" max="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            </div>
+
+            <div class="form-group">
+                <label for="Stock_Option_Level" class="block text-sm font-semibold text-gray-700 mb-1">Stock Option Level (0-3)</label>
+                <input type="number" name="Stock Option Level" id="Stock_Option_Level" placeholder="0-3" required min="0" max="3" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            </div>
+
+            <div class="form-group">
+                <label for="Total_Working_Years" class="block text-sm font-semibold text-gray-700 mb-1">Total Working Years (0-40)</label>
+                <input type="number" name="Total Working Years" id="Total_Working_Years" placeholder="0-40" required min="0" max="40" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            </div>
+
+            <div class="form-group">
+                <label for="Training_Times_Last_Year" class="block text-sm font-semibold text-gray-700 mb-1">Training Times Last Year (0-6)</label>
+                <input type="number" name="Training Times Last Year" id="Training_Times_Last_Year" placeholder="0-6" required min="0" max="6" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            </div>
+
+            <div class="form-group">
+                <label for="Work_Life_Balance" class="block text-sm font-semibold text-gray-700 mb-1">Work Life Balance (1-4)</label>
+                <input type="number" name="Work Life Balance" id="Work_Life_Balance" placeholder="1-4" required min="1" max="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            </div>
+            
+            <div class="form-group">
+                <label for="Years_At_Company" class="block text-sm font-semibold text-gray-700 mb-1">Years At Company (0-40)</label>
+                <input type="number" name="Years At Company" id="Years_At_Company" placeholder="0-40" required min="0" max="40" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            </div>
+            
+            <div class="form-group">
+                <label for="Years_In_Current_Role" class="block text-sm font-semibold text-gray-700 mb-1">Years In Current Role (0-18)</label>
+                <input type="number" name="Years In Current Role" id="Years_In_Current_Role" placeholder="0-18" required min="0" max="18" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            </div>
+            
+            <div class="form-group">
+                <label for="Years_Since_Last_Promotion" class="block text-sm font-semibold text-gray-700 mb-1">Years Since Last Promotion (0-15)</label>
+                <input type="number" name="Years Since Last Promotion" id="Years_Since_Last_Promotion" placeholder="0-15" required min="0" max="15" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            </div>
+
+            <div class="form-group">
+                <label for="Years_With_Curr_Manager" class="block text-sm font-semibold text-gray-700 mb-1">Years With Curr Manager (0-17)</label>
+                <input type="number" name="Years With Curr Manager" id="Years_With_Curr_Manager" placeholder="0-17" required min="0" max="17" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            </div>
+            
+        </div>
+
+        <div class="space-y-6 pt-4 border-t border-gray-200">
+            
+            <div class="form-group">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Business Travel</label>
+                <div class="flex flex-wrap gap-x-6 gap-y-3">
+                    <label class="inline-flex items-center"><input type="radio" name="Business Travel" value="Travel_Rarely" class="form-radio" checked><span class="ml-2 text-sm text-gray-600">Travel Rarely</span></label>
+                    <label class="inline-flex items-center"><input type="radio" name="Business Travel" value="Travel_Frequently" class="form-radio"><span class="ml-2 text-sm text-gray-600">Travel Frequently</span></label>
+                    <label class="inline-flex items-center"><input type="radio" name="Business Travel" value="Non-Travel" class="form-radio"><span class="ml-2 text-sm text-gray-600">Non Travel</span></label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Department</label>
+                <div class="flex flex-wrap gap-x-6 gap-y-3">
+                    <label class="inline-flex items-center"><input type="radio" name="Department" value="Research & Development" class="form-radio" checked><span class="ml-2 text-sm text-gray-600">Research & Development</span></label>
+                    <label class="inline-flex items-center"><input type="radio" name="Department" value="Human Resources" class="form-radio"><span class="ml-2 text-sm text-gray-600">Human Resources</span></label>
+                    <label class="inline-flex items-center"><input type="radio" name="Department" value="Sales" class="form-radio"><span class="ml-2 text-sm text-gray-600">Sales</span></label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Education Field</label>
+                <div class="flex flex-wrap gap-x-6 gap-y-3">
+                    <label class="inline-flex items-center"><input type="radio" name="Education Field" value="Life Sciences" class="form-radio" checked><span class="ml-2 text-sm text-gray-600">Life Sciences</span></label>
+                    <label class="inline-flex items-center"><input type="radio" name="Education Field" value="Medical" class="form-radio"><span class="ml-2 text-sm text-gray-600">Medical</span></label>
+                    <label class="inline-flex items-center"><input type="radio" name="Education Field" value="Marketing" class="form-radio"><span class="ml-2 text-sm text-gray-600">Marketing</span></label>
+                    <label class="inline-flex items-center"><input type="radio" name="Education Field" value="Technical Degree" class="form-radio"><span class="ml-2 text-sm text-gray-600">Technical Degree</span></label>
+                    <label class="inline-flex items-center"><input type="radio" name="Education Field" value="Human Resources" class="form-radio"><span class="ml-2 text-sm text-gray-600">Human Resources</span></label>
+                    <label class="inline-flex items-center"><input type="radio" name="Education Field" value="Other" class="form-radio"><span class="ml-2 text-sm text-gray-600">Other</span></label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Gender</label>
+                <div class="flex flex-wrap gap-x-6 gap-y-3">
+                    <label class="inline-flex items-center"><input type="radio" name="Gender" value="Male" class="form-radio" checked><span class="ml-2 text-sm text-gray-600">Male</span></label>
+                    <label class="inline-flex items-center"><input type="radio" name="Gender" value="Female" class="form-radio"><span class="ml-2 text-sm text-gray-600">Female</span></label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Job Role</label>
+                <div class="flex flex-wrap gap-x-6 gap-y-3">
+                    <label class="inline-flex items-center"><input type="radio" name="Job Role" value="Sales Executive" class="form-radio" checked><span class="ml-2 text-sm text-gray-600">Sales Executive</span></label>
+                    <label class="inline-flex items-center"><input type="radio" name="Job Role" value="Research Scientist" class="form-radio"><span class="ml-2 text-sm text-gray-600">Research Scientist</span></label>
+                    <label class="inline-flex items-center"><input type="radio" name="Job Role" value="Laboratory Technician" class="form-radio"><span class="ml-2 text-sm text-gray-600">Laboratory Technician</span></label>
+                    <label class="inline-flex items-center"><input type="radio" name="Job Role" value="Manufacturing Director" class="form-radio"><span class="ml-2 text-sm text-gray-600">Manufacturing Director</span></label>
+                    <label class="inline-flex items-center"><input type="radio" name="Job Role" value="Healthcare Representative" class="form-radio"><span class="ml-2 text-sm text-gray-600">Healthcare Representative</span></label>
+                    <label class="inline-flex items-center"><input type="radio" name="Job Role" value="Manager" class="form-radio"><span class="ml-2 text-sm text-gray-600">Manager</span></label>
+                    <label class="inline-flex items-center"><input type="radio" name="Job Role" value="Sales Representative" class="form-radio"><span class="ml-2 text-sm text-gray-600">Sales Representative</span></label>
+                    <label class="inline-flex items-center"><input type="radio" name="Job Role" value="Research Director" class="form-radio"><span class="ml-2 text-sm text-gray-600">Research Director</span></label>
+                    <label class="inline-flex items-center"><input type="radio" name="Job Role" value="Human Resources" class="form-radio"><span class="ml-2 text-sm text-gray-600">Human Resources</span></label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Marital Status</label>
+                <div class="flex flex-wrap gap-x-6 gap-y-3">
+                    <label class="inline-flex items-center"><input type="radio" name="Marital Status" value="Married" class="form-radio" checked><span class="ml-2 text-sm text-gray-600">Married</span></label>
+                    <label class="inline-flex items-center"><input type="radio" name="Marital Status" value="Single" class="form-radio"><span class="ml-2 text-sm text-gray-600">Single</span></label>
+                    <label class="inline-flex items-center"><input type="radio" name="Marital Status" value="Divorced" class="form-radio"><span class="ml-2 text-sm text-gray-600">Divorced</span></label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Over Time</label>
+                <div class="flex flex-wrap gap-x-6 gap-y-3">
+                    <label class="inline-flex items-center"><input type="radio" name="Over Time" value="Yes" class="form-radio" checked><span class="ml-2 text-sm text-gray-600">Yes</span></label>
+                    <label class="inline-flex items-center"><input type="radio" name="Over Time" value="No" class="form-radio"><span class="ml-2 text-sm text-gray-600">No</span></label>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="pt-8">
+            <button type="submit" class="w-full py-4 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-lg rounded-xl shadow-lg transition duration-200 ease-in-out transform hover:scale-[1.005] focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50">
+                Predict Attrition
+            </button>
+        </div>
+    </form>
+
+    <div class="mt-10 text-center border-t border-gray-200 pt-8">
+      <h2 class="text-xl font-bold text-gray-800">Prediction Result:</h2>
+      <div id="predictionResult" class="text-5xl font-extrabold mt-3 text-red-600">Waiting for input...</div>
+    </div>
+
+ </div>
+
+<script>
+    document.getElementById('predictionForm').addEventListener('submit', async function(event) {
+        event.preventDefault(); // منع الإرسال الافتراضي للنموذج
+
+        const form = event.target;
+        const formData = new FormData(form);
+        const data = {};
+
+        // جمع بيانات النموذج في كائن JSON
+        for (const [key, value] of formData.entries()) {
+            // تحويل القيم الرقمية إلى أرقام
+            const numValue = Number(value);
+            data[key] = isNaN(numValue) ? value : numValue;
+        }
+
+        const resultDiv = document.getElementById('predictionResult');
+        resultDiv.innerHTML = '<span class="text-xl text-indigo-500">Predicting...</span>';
+        
+        try {
+            const response = await fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data) // إرسال البيانات كـ JSON
+            });
+
+            // حل مشكلة "Unexpected token <"
+            // إذا كان الخادم يرجع خطأ (مثل 400 أو 500)، فإننا نقوم بمعالجة الـ JSON أو النص
+            const contentType = response.headers.get("content-type");
+            let result;
+
+            if (contentType && contentType.indexOf("application/json") !== -1) {
+                result = await response.json();
+            } else {
+                // إذا لم يكن Response هو JSON (مثل HTML أو نص عادي في حالة خطأ كبير)
+                const errorText = await response.text();
+                resultDiv.innerHTML = `<span class="text-base text-red-500">Server Error: ${response.status}</span><br><span class="text-sm text-red-400">Response Text: ${errorText.substring(0, 50)}...</span>`;
+                return;
+            }
+
+
+            if (response.ok) {
+                // عرض النتيجة بنجاح
+                resultDiv.innerHTML = `
+                    <span class="${result.attrition_prediction.includes('leave') ? 'text-red-600' : 'text-green-600'}">
+                        ${result.attrition_prediction}
+                    </span>
+                    <div class="text-base font-medium text-gray-500 mt-2">
+                        Prob: ${result.probability_of_attrition} (Threshold: ${result.threshold_used})
+                    </div>
+                `;
+            } else {
+                // معالجة أخطاء JSON التي تأتي من الخادم (مثل 400 Bad Request)
+                resultDiv.innerHTML = `<span class="text-xl text-red-600">Error:</span> <span class="text-base text-red-500">${result.error}</span>`;
+            }
+
+        } catch (error) {
+            // معالجة أخطاء الشبكة
+            resultDiv.innerHTML = `<span class="text-xl text-red-600">Network Error: ${error.message}</span>`;
+            console.error('Fetch error:', error);
+        }
+    });
+</script>
+</body>
+</html>
