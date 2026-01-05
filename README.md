@@ -93,3 +93,9 @@ Models were evaluated using:
 - **Saved As:**  
   ```bash
   ensemble_attrition_model.pkl
+
+---
+
+## 🎥 YouTube Link:
+
+To watch the video click [here](https://youtu.be/YX-DU7Wpi5Q?si=SHcbCWTdN65ZwaVC)
